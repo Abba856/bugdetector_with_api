@@ -446,6 +446,17 @@ function example() {
                         html += '<div class="issue-type">' + issue.type + ' (Line ' + (issue.line_number || 'N/A') + ')</div>';
                         html += '<div class="issue-description">' + issue.description + '</div>';
                         html += '<div class="issue-suggestion">💡 Suggestion: ' + issue.suggestion + '</div>';
+
+                        // Add additional context from Serper if available
+                        if (issue.additional_context) {
+                            html += '<div class="issue-external-context" style="margin-top: 10px; padding: 10px; background: #e6f7ff; border-radius: 6px; border-left: 3px solid #1890ff;">';
+                            html += '<strong>📚 Additional Info:</strong><br>';
+                            html += '<a href="' + issue.additional_context.link + '" target="_blank" style="color: #1890ff; text-decoration: none;">';
+                            html += issue.additional_context.title + '</a><br>';
+                            html += '<small style="color: #666;">' + issue.additional_context.snippet + '</small>';
+                            html += '</div>';
+                        }
+
                         html += '</div>';
                     });
 

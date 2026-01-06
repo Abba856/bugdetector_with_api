@@ -13,6 +13,9 @@ This project implements an AI-driven bug detection system that enhances software
 > **Note**: This implementation uses the `google-generativeai` package which has been deprecated.
 > Google recommends switching to the `google.genai` package for future updates and bug fixes.
 
+> **API Limits**: The free tier of the Gemini API has rate limits (20 requests per day per model).
+> If you encounter quota exceeded errors, you may need to upgrade your plan or wait until the quota resets.
+
 ## Installation
 
 1. Clone the repository

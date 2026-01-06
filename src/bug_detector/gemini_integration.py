@@ -9,12 +9,12 @@ class GeminiIntegration:
     """
     Handles integration with the Gemini API for code analysis.
     """
-    
+
     def __init__(self):
         self.api_key = os.getenv('GEMINI_API_KEY')
         if not self.api_key:
             raise ValueError("GEMINI_API_KEY not found in environment variables")
-        
+
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel('gemini-2.5-flash')
     
@@ -71,14 +71,26 @@ class GeminiIntegration:
                 "performance_score": 80
             }
         except Exception as e:
-            return {
-                "error": f"Error calling Gemini API: {str(e)}",
-                "has_issues": False,
-                "issues": [],
-                "code_quality_score": 0,
-                "security_score": 0,
-                "performance_score": 0
-            }
+            error_msg = str(e)
+            # Check if it's a quota exceeded error
+            if "429" in error_msg or "quota" in error_msg.lower() or "rate limit" in error_msg.lower():
+                return {
+                    "error": f"API quota exceeded. Please check your billing details. {str(e)}",
+                    "has_issues": False,
+                    "issues": [],
+                    "code_quality_score": 0,
+                    "security_score": 0,
+                    "performance_score": 0
+                }
+            else:
+                return {
+                    "error": f"Error calling Gemini API: {str(e)}",
+                    "has_issues": False,
+                    "issues": [],
+                    "code_quality_score": 0,
+                    "security_score": 0,
+                    "performance_score": 0
+                }
     
     def explain_fix(self, buggy_code: str, fixed_code: str) -> str:
         """
