@@ -1,0 +1,7 @@
+google-generativeai
+python-dotenv
+numpy
+pandas
+scikit-learn
+flask
+requests
